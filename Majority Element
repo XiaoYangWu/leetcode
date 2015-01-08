@@ -1,0 +1,89 @@
+public class Solution {
+    public int majorityElement(int[] num) {
+             int n=num.length;
+         int count=0;
+         int me=0;
+         if(n==1)
+        	 return num[0];
+         if(n%2==0){
+              for(int i=0;i<n;i++){
+                   if(count==0)
+                   {
+                	   me=num[i];
+                	   count++;
+                	   if(count==(n/2))
+                		   return me;
+                   }
+                   else{
+                	   if(me==num[i])
+                	   {
+                		   count++;
+                		   if(count==(n/2))
+                			   return me;
+                	   }
+                	   else
+                		   count--;
+                   }
+              }
+              if(count==0){
+            	  int selet1=num[n-1];
+            	  int selet2=num[n-2];
+            	  int count2=0;
+            	  for(int i=0;i<n;i++)
+            		  if(num[i]==selet1)
+            		  {  count2++;
+            		     if(count2==(n/2))
+            		    	 return selet1;
+            		  }
+            	  return selet2;
+              }
+              else 
+            	  return me;
+              
+         }
+         else{
+        	 for(int i=0;i<n-1;i++){
+                 if(count==0)
+                 {
+              	   me=num[i];
+              	   count++;
+              	   
+                 }
+                 else{
+              	   if(me==num[i])
+              	   {
+              		   count++;
+              		   
+              	   }
+              	   else
+              		   count--;
+                 }
+            }
+        	 if(count==0){
+           	  int selet1=num[n-1];
+           	  int selet2=num[n-2];
+           	  int selet3=num[n-3];
+           	  int count1=0;
+           	  
+           	  for(int i=0;i<n;i++)
+           		  if(num[i]==selet1)
+           		  {  count1++;
+           		     if(count1==(n/2))
+           		    	 return selet1;
+           		  }
+           	  
+           	  int count2=0;
+           	  
+           	for(int i=0;i<n;i++)
+         		  if(num[i]==selet2)
+         		  {  count2++;
+         		     if(count2==(n/2))
+         		    	 return selet2;
+         		  }
+           	  return selet3;
+             }
+        	 else
+        		 return me;
+         }
+    }
+}
