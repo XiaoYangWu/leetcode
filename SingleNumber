@@ -1,3 +1,7 @@
+//利用位运算，两个相同的数进行位异或运算结果为0,一个数和0进行异或运算结果为这个数本身，因此用0和数组中的每个数进行异或
+运算可得到Single Number
+
+
 public class Solution {
     public int singleNumber(int[] A) {
          int result=0;
