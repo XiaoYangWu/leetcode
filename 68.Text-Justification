@@ -1,0 +1,100 @@
+/*
+ Given an array of words and a length L, format the text such that each line has exactly L characters 
+ and is fully (left and right) justified.
+
+You should pack your words in a greedy approach; that is, pack as many words as you can in each line.
+Pad extra spaces ' ' when necessary so that each line has exactly L characters.
+
+Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a 
+line do not divide evenly between words, the empty slots on the left will be assigned more spaces than the 
+slots on the right.
+
+For the last line of text, it should be left justified and no extra space is inserted between words.
+
+For example,
+words: ["This", "is", "an", "example", "of", "text", "justification."]
+L: 16.
+
+Return the formatted lines as:
+
+[
+   "This    is    an",
+   "example  of text",
+   "justification.  "
+]
+
+Note: Each word is guaranteed not to exceed L in length
+
+*/
+
+public class Solution {
+    public List<String> fullJustify(String[] words, int L) {
+        List<String> tem=new ArrayList<String>();
+        int llen=-1;
+        int len=0;
+        List<String> rs=new ArrayList<String>();
+        if(words.length==0){
+            StringBuilder sb=new StringBuilder();
+            while(L--!=0)
+               sb.append(" ");
+             rs.add(sb.toString());
+            return rs;
+        }
+        for(String word:words){
+            
+            if(llen+word.length()<L){
+                llen++;
+                llen+=word.length();
+                len+=word.length();
+                tem.add(word);
+            }
+            else{
+                addRs(tem,rs,len,L);
+                len=word.length();
+                llen=word.length();
+                tem.clear();
+                tem.add(word);
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        sb.append(tem.get(0));
+        for(int i=1;i<tem.size();i++)
+        {
+            sb.append(" ");
+            sb.append(tem.get(i));
+        }
+        L-=sb.length();
+        while(L--!=0)
+           sb.append(" ");
+        rs.add(sb.toString());
+        return rs;
+    }
+    public void addRs(List<String> tem,List<String> rs,int len,int L){
+        StringBuilder sb=new StringBuilder();
+        if(tem.size()==1){
+            sb.append(tem.get(0));
+            while(len++!=L){
+                sb.append(" ");
+            }
+        }
+        else{
+           int n=tem.size();
+           int spaceCount=(L-len)/(n-1);
+           int extraSpaceCount=(L-len)%(n-1);
+           StringBuilder space=new StringBuilder();
+           while(spaceCount--!=0)
+               space.append(" ");
+           for(int i=0;i<n-1;i++){
+               sb.append(tem.get(i));
+               sb.append(space);
+               if(extraSpaceCount!=0)
+               {
+                   sb.append(" ");
+                   extraSpaceCount--;
+               }
+           }
+           sb.append(tem.get(n-1));
+        }
+         rs.add(sb.toString());
+    }
+}
