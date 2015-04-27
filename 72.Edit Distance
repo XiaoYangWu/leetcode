@@ -1,0 +1,53 @@
+/*
+ Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+
+You have the following 3 operations permitted on a word:
+
+a) Insert a character
+b) Delete a character
+c) Replace a character
+*/
+
+public class Solution {
+    public int minDistance(String word1, String word2) {
+        int n1=word1.length();
+        int n2=word2.length();
+        int[][] dis=new int[n1+1][n2+1];
+        for(int i=0;i<n1+1;i++)
+           for(int j=0;j<n2+1;j++)
+              dis[i][j]=-1;
+        recur(word1,0,n1-1,word2,0,n2-1,dis);
+        return dis[0][0];
+    }
+    public void recur(String w1,int s1,int e1,String w2,int s2,int e2,int[][] dis){
+       if(dis[s1][s2]!=-1)
+          return;
+       if(s1>e1&&s2>e2)
+       {
+           dis[s1][s2]=0;
+           return;
+       }
+       if(s1>e1){
+           dis[s1][s2]=e2-s2+1;
+           return;
+       }
+       if(s2>e2){
+           dis[s1][s2]=e1-s1+1;
+           return;
+       }
+       
+       if(w1.charAt(s1)==w2.charAt(s2))
+       {
+           recur(w1,s1+1,e1,w2,s2+1,e2,dis);
+           dis[s1][s2]=dis[s1+1][s2+1];
+           return;
+       }
+        recur(w1,s1+1,e1,w2,s2+1,e2,dis);
+        recur(w1,s1,e1,w2,s2+1,e2,dis);
+        recur(w1,s1+1,e1,w2,s2,e2,dis);
+        dis[s1][s2]=min(dis[s1+1][s2+1],dis[s1+1][s2],dis[s1][s2+1])+1;
+    }
+    public int min(int a,int b,int c){
+        return a<b?(a<c?a:c):(b<c?b:c);
+    }
+}
