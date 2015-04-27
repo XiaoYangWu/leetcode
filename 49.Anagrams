@@ -1,0 +1,37 @@
+/*
+Given an array of strings, return all groups of strings that are anagrams.
+
+Note: All inputs will be in lower-case.
+
+*/
+
+public class Solution {
+    public List<String> anagrams(String[] strs) {
+     HashMap<String,List<String>> hm=new HashMap<String,List<String>>();
+     ArrayList<String> rs=new ArrayList<String>();
+     List<String> al=null;
+     for(String str:strs){
+         String tem=sort(str);
+         if((al=hm.get(tem))!=null){
+             al.add(str);
+         }
+         else{
+             al=new ArrayList<String>();
+             al.add(str);
+             hm.put(tem,al);
+         }
+     }
+     for(List<String> st:hm.values()){
+         if(st.size()>=2){
+             for(String s:st)
+                rs.add(s);
+         }
+     }
+     return rs;
+    }
+    public String sort(String s){
+        char[] tem=s.toCharArray();
+        Arrays.sort(tem);
+        return new String(tem);
+    }
+}
