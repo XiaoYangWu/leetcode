@@ -1,0 +1,49 @@
+/*
+ Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+For example, given n = 3, a solution set is:
+
+"((()))", "(()())", "(())()", "()(())", "()()()" 
+
+*/
+
+public class Solution {
+    public List<String> generateParenthesis(int n) {
+        ArrayList[] arr=new ArrayList[(n+2)*(n+1)/2];
+		for(int i=0;i<arr.length;i++)
+			arr[i]=new ArrayList<String>();
+		dp(n,n,n,arr);
+		return arr[arr.length-1];
+    }
+    private static void dp(int n1, int n2,int n, ArrayList[] arr) {
+		// TODO Auto-generated method stub
+		int index=countIndex(n1,n2,n);
+		if(!arr[index].isEmpty())
+			return ;
+		if(n1==0)
+		{
+			String tem="";
+			for(;n2>0;n2--){
+				tem+=")"; 
+			}
+			arr[index].add(tem);
+			return ;
+		}
+		if(n1!=n2){
+			dp(n1,n2-1,n,arr);
+			int subdex=countIndex(n1,n2-1,n);
+			List<String> subrs=arr[subdex];
+			for(String ms:subrs)
+				arr[index].add(")"+ms);
+		}
+		dp(n1-1,n2,n,arr);
+		int subdex=countIndex(n1-1,n2,n);
+		List<String> subrs=arr[subdex];
+		for(String ms:subrs)
+			arr[index].add("("+ms);
+		return ;
+	}
+	private static int countIndex(int n1,int n2,int n){
+		return (n1)*(n+1)+(n2+1)-(n1+1)*n1/2-1;
+	}
+}
