@@ -1,0 +1,36 @@
+/*
+Given inorder and postorder traversal of a tree, construct the binary tree.
+*/
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        int in=inorder.length;
+        int pn=postorder.length;
+        if(in==0)
+            return null;
+        TreeNode root=recur(inorder,0,in-1,postorder,0,pn-1);
+        return root;
+    }
+    public TreeNode recur(int[] a,int st,int en,int[] b,int sst,int een){
+       if(st>en)
+           return null;
+        TreeNode root=new TreeNode(b[een]);
+        int i;
+        for(i=st;i<=en;i++){
+            if(a[i]==b[een])
+                break;
+        }
+        root.left=recur(a,st,i-1,b,sst,i-st-1+sst);
+        root.right=recur(a,i+1,en,b,i-st+sst,een-1);
+        return root;
+    }
+}
