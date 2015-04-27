@@ -1,0 +1,29 @@
+/*
+Reverse digits of an integer.
+
+Example1: x = 123, return 321
+Example2: x = -123, return -321 
+
+*/
+
+public class Solution {
+    public int reverse(int x) {
+          Stack<Integer> st=new Stack<Integer>();
+	   int y=Math.abs(x);
+	   while(y>0){
+		   st.push(y%10);
+		   y/=10;
+	   }
+	   long rs=0L;
+	   for(int weight=1;!st.empty();weight*=10){
+		   rs+=((long)st.pop())*weight; 
+	   }
+	   if(x<0)
+		   rs=-rs;
+	   if(rs>(long)Integer.MAX_VALUE||rs<(long)Integer.MIN_VALUE)
+		   return 0;
+	  
+	   
+	   return (int)rs;
+    }
+}
