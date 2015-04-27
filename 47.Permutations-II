@@ -1,0 +1,42 @@
+/*
+ Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+For example,
+[1,1,2] have the following unique permutations:
+[1,1,2], [1,2,1], and [2,1,1]. 
+*/
+
+public class Solution {
+    public List<List<Integer>> permuteUnique(int[] num) {
+        LinkedList<Integer> ls=new LinkedList<Integer>();
+       for(int i:num)
+         ls.add(i);
+        return recur(ls);
+    }
+    public List<List<Integer>> recur(LinkedList<Integer> ls){
+        int n=ls.size();
+        List<List<Integer>> rs=new LinkedList<List<Integer>>();
+        if(n==1){
+            List<Integer> ele=new LinkedList<Integer>();
+            ele.add(ls.get(0));
+            rs.add(ele);
+            return rs;
+        }
+        HashSet<Integer> hs=new HashSet<Integer>();
+        
+        for(int i=0;i<n;i++){
+            int now=ls.get(i);
+            if(hs.contains(now))
+                continue;
+            hs.add(now);
+            LinkedList<Integer> tem=new LinkedList<Integer>(ls);
+            tem.remove(i);
+            List<List<Integer>> rss=recur(tem);
+            for(List<Integer> t:rss){
+                t.add(0,now);
+                rs.add(t);
+            }
+        }
+        return rs;
+    }
+}
