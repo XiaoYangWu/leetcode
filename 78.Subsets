@@ -1,0 +1,55 @@
+/*
+ Given a set of distinct integers, S, return all possible subsets.
+
+Note:
+
+    Elements in a subset must be in non-descending order.
+    The solution set must not contain duplicate subsets.
+
+For example,
+If S = [1,2,3], a solution is:
+
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+
+*/
+
+public class Solution {
+    public List<List<Integer>> subsets(int[] S) {
+        int n=S.length;
+        Arrays.sort(S);
+        List<List<List<Integer>>> rs=new ArrayList<List<List<Integer>>>();
+        for(int i=0;i<n;i++){
+            List<List<Integer>> tem=new ArrayList<List<Integer>>();
+            rs.add(tem);
+        }
+        List<Integer> t1=new LinkedList<Integer>();
+        List<Integer> t2=new LinkedList<Integer>();
+        t2.add(S[n-1]);
+        List<List<Integer>> end=rs.get(n-1);
+        end.add(t1);
+        end.add(t2);
+        for(int i=n-2;i>=0;i--){
+          List<List<Integer>> des=rs.get(i);
+          List<List<Integer>> tems=rs.get(i+1);
+          for(List<Integer> t3:tems){
+              des.add(t3);
+              List<Integer> t4=new LinkedList<Integer>();
+              t4.add(S[i]);
+              for(int j:t3)
+                  t4.add(j);
+              des.add(t4);
+          }
+        }
+        return rs.get(0);
+    }
+   
+}
