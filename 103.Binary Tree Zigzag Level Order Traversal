@@ -1,0 +1,79 @@
+/*
+Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+
+For example:
+Given binary tree {3,9,20,#,#,15,7},
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its zigzag level order traversal as:
+
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+
+*/
+
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        TreeNode levelLast=root;
+        boolean flag=false;
+        List<List<Integer>> rs=new ArrayList<List<Integer>>();
+        if(root==null)
+           return rs;
+        List<Integer> tem=new ArrayList<Integer>();
+        Stack<TreeNode> st=new Stack<TreeNode>();
+        ArrayDeque<TreeNode> qe=new ArrayDeque<TreeNode>();
+        qe.add(root);
+        while(!qe.isEmpty()){
+            TreeNode now=qe.poll();
+            if(flag){
+               st.push(now);
+               if(now.left!=null)
+                   qe.add(now.left);
+               if(now.right!=null)
+                   qe.add(now.right);
+                if(now==levelLast)
+                {
+                    while(!st.isEmpty())
+                      tem.add(st.pop().val);
+                    rs.add(tem);
+                    tem=new ArrayList<Integer>();
+                    levelLast=qe.peekLast();
+                    flag=!flag;
+                }
+            }
+            else{
+                tem.add(now.val);
+                if(now.left!=null)
+                   qe.add(now.left);
+               if(now.right!=null)
+                   qe.add(now.right);
+                if(now==levelLast)
+                {
+                    rs.add(tem);
+                    tem=new ArrayList<Integer>();
+                    levelLast=qe.peekLast();
+                    flag=!flag;
+                }
+            }
+            
+        }
+        return rs;
+    }
+}
