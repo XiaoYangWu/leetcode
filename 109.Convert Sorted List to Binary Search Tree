@@ -1,0 +1,57 @@
+/*
+Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+*/
+
+/**时间复杂度O(n)
+ * 因为二叉查找树中序遍历与链表升序相同，所以按中序简历二叉树，且建立完结点后链表指针向后移。
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ class Wrap{
+   public ListNode head;
+   Wrap(ListNode head){
+       this.head=head;
+   }
+ }
+public class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head==null)
+            return null;
+        int n=0;
+        ListNode p=head;
+        while(p!=null)
+        {
+            n++;
+            p=p.next;
+        }
+        Wrap tem=new Wrap(head);
+        TreeNode rs=recur(tem,0,n-1);
+        return rs;
+    }
+    public TreeNode recur(Wrap head,int start,int end){
+        if(start>end)
+            return null;
+        int mid=start+(end-start)/2;
+        TreeNode left=recur(head,start,mid-1);
+        TreeNode rs=new TreeNode(head.head.val);
+        rs.left=left;
+        head.head=head.head.next;
+        rs.right=recur(head,mid+1,end);
+        
+        return rs;
+    }
+    
+}
