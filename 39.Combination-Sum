@@ -1,0 +1,55 @@
+/*
+ Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+
+The same repeated number may be chosen from C unlimited number of times.
+
+Note:
+
+    All numbers (including target) will be positive integers.
+    Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+    The solution set must not contain duplicate combinations.
+
+For example, given candidate set 2,3,6,7 and target 7,
+A solution set is:
+[7]
+[2, 2, 3] 
+
+*/
+
+public class Solution {
+    
+    public List<List<Integer>> combinationSum(int[] candidates,int target) 
+    {
+         List<List<Integer>> rs=new ArrayList<List<Integer>>();
+         LinkedList<Integer> tem=new LinkedList<Integer>();
+         Arrays.sort(candidates);
+         recur(rs,tem,candidates,0,candidates.length-1,target);
+         return rs;
+    }
+    public void recur(List<List<Integer>> rs,LinkedList<Integer> tem,int[] candidates,int start,int end,int target)
+    {
+        if(start>end)
+           return;
+        int sele=candidates[start];
+        if(sele>target)
+           return;
+        if(sele==target)
+        {
+            tem.add(sele);
+            List<Integer> fact=new LinkedList<Integer>();
+            for(int i:tem)
+               fact.add(i);
+            rs.add(fact);
+            tem.removeLast();
+            return;
+        }
+        else{
+           tem.add(sele);
+           int newTarget=target-sele;
+           recur(rs,tem,candidates,start,end,newTarget);
+           tem.removeLast();
+           recur(rs,tem,candidates,start+1,end,target);
+        }
+        
+    }
+}
