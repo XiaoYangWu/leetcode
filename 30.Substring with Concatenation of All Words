@@ -1,0 +1,79 @@
+/*
+ You are given a string, s, and a list of words, words, that are all of the same length. Find all starting indices of substring(s) in s that is a concatenation of each word in words exactly once and without any intervening characters.
+
+For example, given:
+s: "barfoothefoobarman"
+words: ["foo", "bar"]
+
+You should return the indices: [0,9].
+(order does not matter). 
+
+*/
+
+public class Solution {
+    public List<Integer> findSubstring(String S, String[] L) {
+         int arr_len=L.length;
+        int str_len=L[0].length();
+        int n=S.length();
+        ArrayList<Integer> rs=new ArrayList<Integer>();
+        HashMap<String,Integer> hm=new HashMap<String,Integer>();
+        for(String s:L){
+             setMap(hm,s);   
+        }
+        for(int i=0;i<str_len;i++){
+            Queue<String> qe=new LinkedList<String>();
+            HashMap<String,Integer> cur=new HashMap<String,Integer>();
+            int start=i;
+            int now=i;
+            while(now<n-str_len+1){
+               String tem=S.substring(now,now+str_len);
+               if(!hm.containsKey(tem)){
+                   now+=str_len;
+                   start=now;
+                   
+                   cur.clear();
+                   qe.clear();
+               }
+               else{
+                   setMap(cur,tem);
+                   if(cur.get(tem)<=hm.get(tem)){
+                       qe.offer(tem);
+                       if(qe.size()==arr_len){
+                           rs.add(start);
+                           start+=str_len;
+                           now+=str_len;
+                           String t=qe.poll();
+                           cur.put(t,cur.get(t)-1);
+                       }
+                       else{
+                           now+=str_len;
+                       }
+                   }
+                   else{
+                      while(!qe.peek().equals(tem)){
+                          String t=qe.poll();
+                          start+=str_len;
+                          cur.put(t,cur.get(t)-1);
+                      }
+                      start+=str_len;
+                      now+=str_len;
+                      qe.poll();
+                      qe.offer(tem);
+                      cur.put(tem,cur.get(tem)-1);
+                   }
+               }
+            
+                
+            }
+        }
+        return rs;
+    }
+    public void setMap(HashMap<String,Integer> hm,String s){
+         if(!hm.containsKey(s)){
+                hm.put(s,1);
+        }
+         else{
+             hm.put(s,hm.get(s)+1);
+         }
+    }
+}
