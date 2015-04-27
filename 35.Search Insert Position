@@ -1,0 +1,34 @@
+/*
+Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You may assume no duplicates in the array.
+
+Here are few examples.
+[1,3,5,6], 5 → 2
+[1,3,5,6], 2 → 1
+[1,3,5,6], 7 → 4
+[1,3,5,6], 0 → 0 
+
+*/
+
+public class Solution {
+    public int searchInsert(int[] A, int target) {
+         int n=A.length;
+       return binarySearch(A,0,n-1,target);
+    }
+    private static int binarySearch(int[] a, int start, int end, int target) {
+		// TODO Auto-generated method stub
+		if(start>end)
+			return start;
+		int mid=(start+end)/2;
+		if(a[mid]==target)
+			return mid;
+		else if(a[mid]>target)
+			return binarySearch(a,start,mid-1,target);
+		else 
+			return binarySearch(a,mid+1,end,target);
+		
+	
+	}
+
+}
