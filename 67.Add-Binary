@@ -1,0 +1,65 @@
+/*
+ Given two binary strings, return their sum (also a binary string).
+
+For example,
+a = "11"
+b = "1"
+Return "100". 
+
+*/
+
+class Result{
+  public  char rs;
+  public  boolean flag;
+}
+public class Solution {
+    public String addBinary(String a, String b) {
+        Result tem=new Result();
+        tem.flag=false;
+        int n1=a.length();
+        int n2=b.length();
+        int max=n1>n2?n1:n2;
+        StringBuilder rs=new StringBuilder(max+1);
+        for(int i=0;i<max+1;i++)
+           rs.append('0');
+        for(int i=1;i<=max;i++){
+            if((n1-i)>=0&&(n2-i)>=0)
+               charAdd(a.charAt(n1-i),b.charAt(n2-i),tem);
+            else if((n1-i)<0)
+               charAdd('0',b.charAt(n2-i),tem);
+            else
+               charAdd(a.charAt(n1-i),'0',tem);
+            rs.setCharAt(max+1-i,tem.rs);
+        }
+        if(tem.flag)
+        {
+            rs.setCharAt(0,'1');
+            return rs.toString();
+        }
+        return rs.substring(1);
+    }
+    public void charAdd(char a,char b,Result rs){
+        if(a=='0'&&b=='0'){
+            if(rs.flag){
+                rs.rs='1';
+                rs.flag=false;
+            }
+            else
+               rs.rs='0';
+        }
+        else if(a=='1'&&b=='1'){
+            if(rs.flag)
+               rs.rs='1';
+            else{
+                rs.rs='0';
+                rs.flag=true;
+            }
+        }
+        else{
+            if(rs.flag)
+               rs.rs='0';
+            else
+                rs.rs='1';
+        }
+    }
+}
