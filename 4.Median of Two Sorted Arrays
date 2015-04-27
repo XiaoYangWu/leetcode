@@ -1,0 +1,79 @@
+public class Solution {
+    public double findMedianSortedArrays(int A[], int B[]) {
+         int m=A.length;
+       int n=B.length;
+       int count=m+n;
+       if(count%2==0){
+    	   count/=2;
+    	   int i=0,j=0,k=0;
+    	   while(k<count-1&&i<m&&j<n){
+    		   if(A[i]<B[j]){
+    			   i++;
+    			   k++;
+    		   }
+    		   else{
+    			   j++;
+    			   k++;
+    		   }
+    		   
+    	   }
+    	   double val1,val2;
+    	   if(i<m&&j<n){
+    	   if(A[i]<B[j])
+    		   val1=A[i++];
+    	   else
+    		   val1=B[j++];
+    	   
+    	   if(i<m&&j<n){
+    	   if(A[i]<B[j])
+    		   val2=A[i++];
+    	   else
+    		   val2=B[j++];
+    	   }
+    	   else if(i<m)
+    		   val2=A[i];
+    	   else
+    		   val2=B[j];
+    	   return (val1+val2)/2;
+    	   }
+    	   else
+    	   {
+    		   if(i<m){
+    			   return ((double)(A[i+count-k-1]+A[i+count-k]))/2;
+    		   }
+    		   else
+    			   return ((double)(B[j+count-k-1]+B[j+count-k]))/2;
+    	   }
+       }
+       else{
+    	   int i=0,j=0,k=0;
+    	   count/=2;
+    	   count++;
+    	   while(k<count-1&&i<m&&j<n){
+    		   if(A[i]<B[j]){
+    			   i++;
+    			   k++;
+    		   }
+    		   else{
+    			   j++;
+    			   k++;
+    		   }
+    		   
+    	   }
+    	   if(i<m&&j<n){
+    	   if(A[i]<B[j])
+    		   return A[i];
+    	   else
+    		   return B[j];
+    	   }
+    	   else if(i<m)
+    	   {
+    		   return A[i+count-k-1];
+    	   }
+    	   else
+    		   return B[j+count-k-1];
+       }
+	   
+	   
+    }
+}
