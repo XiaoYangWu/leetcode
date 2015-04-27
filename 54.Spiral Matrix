@@ -1,0 +1,56 @@
+/*
+Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+For example,
+Given the following matrix:
+
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+*/
+
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> ls=new ArrayList<Integer>();
+        if(matrix==null)
+            return ls;
+        int m=matrix.length;
+        if(m==0)
+            return ls;
+        int n=matrix[0].length;
+        if(n==0)
+            return ls;
+        int loop1=(m+1)/2;
+        int loop2=(n+1)/2;
+        int loop=loop1<loop2?loop1:loop2;
+        for(int i=0;i<loop;i++)
+            iterate(matrix,i,m,n,ls);
+        
+        return ls;
+    }
+    public void iterate(int[][] matrix,int start,int m,int n,List<Integer> ls){
+        int colEnd=n-1-start;
+        int rowEnd=m-1-start;
+        if(rowEnd==start){
+            for(int i=start;i<=colEnd;i++)
+                ls.add(matrix[start][i]);
+           return;
+        }
+        if(colEnd==start){
+            for(int i=start;i<=rowEnd;i++)
+                ls.add(matrix[i][start]);
+           return;
+        }
+        for(int i=start;i<colEnd;i++)
+           ls.add(matrix[start][i]);
+        for(int i=start;i<rowEnd;i++)
+            ls.add(matrix[i][colEnd]);
+        for(int i=colEnd;i>start;i--)
+               ls.add(matrix[rowEnd][i]);
+        for(int i=rowEnd;i>start;i--)
+              ls.add(matrix[i][start]);
+        
+    }
+}
