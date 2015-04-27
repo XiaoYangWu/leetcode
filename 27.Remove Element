@@ -1,0 +1,29 @@
+/*
+Given an array and a value, remove all instances of that value in place and return the new length.
+
+The order of elements can be changed. It doesn't matter what you leave beyond the new length. 
+
+*/
+
+class Solution {
+public:
+    int removeElement(int A[], int n, int elem) {
+        
+        if(n==0)
+          return 0;
+        int rs;
+        for(rs=n-1;rs>=0&&A[rs]==elem;rs--);
+        if(rs<0)
+          return 0;
+        for(int i=0;i<=rs;i++)
+             if(A[i]==elem)
+             {
+                  A[i]=A[rs];
+                  A[rs]=elem;
+                  rs--;
+                  while(A[rs]==elem)
+                     rs--;
+             }
+        return rs+1;
+    }
+};
