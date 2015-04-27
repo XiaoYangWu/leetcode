@@ -1,0 +1,53 @@
+/*
+ Given a collection of integers that might contain duplicates, S, return all possible subsets.
+
+Note:
+
+    Elements in a subset must be in non-descending order.
+    The solution set must not contain duplicate subsets.
+
+For example,
+If S = [1,2,2], a solution is:
+
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+
+*/
+
+public class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] num) {
+        List<List<Integer>> rs=new LinkedList<List<Integer>>();
+        List<Integer> tem=new LinkedList<Integer>();
+        HashMap<String,Boolean> hm=new HashMap<String,Boolean>();
+        int n=num.length;
+        recur(num,0,rs,tem,hm);
+        return rs;
+    }
+    public void recur(int[] num,int index,List<List<Integer>> rs,List<Integer> tem,HashMap<String,Boolean> hm){
+        int n=num.length;
+        if(index==n){
+            List<Integer> t=new LinkedList<Integer>(tem);
+            Collections.sort(t);
+            StringBuilder sb=new StringBuilder();
+            for(int now:t)
+               sb.append(now);
+            String key=sb.toString();
+            if(!hm.containsKey(key)){
+                hm.put(key,true);
+                rs.add(t);
+            }
+            return;
+        }
+        int now=num[index];
+        tem.add(now);
+        recur(num,index+1,rs,tem,hm);
+        tem.remove(tem.size()-1);
+        recur(num,index+1,rs,tem,hm);
+    }
+}
