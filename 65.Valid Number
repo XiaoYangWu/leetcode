@@ -1,0 +1,72 @@
+/*
+Validate if a given string is numeric.
+
+Some examples:
+"0" => true
+" 0.1 " => true
+"abc" => false
+"1 a" => false
+"2e10" => true
+
+Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before 
+implementing one.
+
+Update (2015-02-10):
+The signature of the C++ function had been updated. If you still see your function signature accepts a const 
+char * argument, please click the reload button to reset your code definition. 
+*/
+
+public class Solution {
+    public boolean isNumber(String s) {
+       	 s=s.trim();
+	        int n=s.length();
+	        if(n==0)
+	          return false;
+	        int pointCount=0;
+	        int eCount=0;
+	        boolean hasNum=false;
+	        if(n==1){
+	            char c=s.charAt(0);
+	            if(!(c>='0'&&c<='9'))
+	              return false;
+	        }
+	        for(int i=0;i<n;i++){
+	            char c=s.charAt(i);
+	            if(c=='-'||c=='+'){
+	                if(!(i==0||s.charAt(i-1)=='e'))
+	                  return false;
+	                if(i==n-1)
+	                  return false;
+	            }
+	            
+	            else if(c>='0'&&c<='9')
+	                hasNum=true;
+	            
+	            else if(c=='.'){
+	                pointCount++;
+	                if(pointCount>1)
+	                   return false;
+	                if(eCount!=0)
+	                   return false;
+	            }
+	            else if(c=='e'){
+	                if(!hasNum)
+	                   return false;
+	                hasNum=false;
+	                eCount++;
+	                if(eCount>1)
+	                  return false;
+	                
+		            if(i==n-1||i==0)
+		              return false;
+	            }
+	            else
+	               return false;
+	        
+	        }
+	        if(hasNum)
+	          return true;
+	        else
+	          return false;
+    }
+}
