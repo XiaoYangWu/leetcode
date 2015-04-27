@@ -1,0 +1,40 @@
+/*Implement pow(x, n). 
+
+*/
+
+public class Solution {
+    
+    public double pow(double x, int n) {
+         if(n==Integer.MIN_VALUE){
+    		n++;
+    		return 1/pow(x,-n)*x;
+    	}
+         if(n<0){
+            return 1/pow(x,-n);
+        }
+        if(n==0)
+           return 1;
+        if(n==1)
+           return x;
+        if(x==1.00000)
+            return x;
+        if(x==-1.0){
+            if(n%2==0)
+               return 1;
+            return -1;
+        }
+        
+        if(n%2==0){
+            n/=2;
+            double tem=pow(x,n);
+            return tem*tem;
+        }
+        else{
+            n/=2;
+            double tem=pow(x,n);
+            return tem*tem*x;
+        }
+      
+        
+    }
+}
