@@ -1,0 +1,48 @@
+/*
+ A message containing letters from A-Z is being encoded to numbers using the following mapping:
+
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+
+Given an encoded message containing digits, determine the total number of ways to decode it.
+
+For example,
+Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+
+The number of ways decoding "12" is 2. 
+*/
+
+public class Solution {
+    public int numDecodings(String s) {
+        int n;
+        if(s==null||(n=s.length())==0)
+            return 0;
+        HashMap<Integer,Integer> hm=new HashMap<Integer,Integer>();
+        return recur(s,0,hm);
+    }
+    public int recur(String s,int index, HashMap<Integer,Integer> hm){
+        if(hm.containsKey(index))
+           return hm.get(index);
+        int n=s.length();
+        if(index!=n&&s.charAt(index)=='0')
+        {
+            hm.put(index,0);
+            return 0;
+        }
+        if(index==n-1||index==n)
+        {
+            hm.put(index,1);
+            return 1;
+        }
+        int rs=0;
+        rs+=recur(s,index+1,hm);
+        int tem=Integer.parseInt(s.substring(index,index+2));
+        if(tem>=10&&tem<=26)
+           rs+=recur(s,index+2,hm);
+         hm.put(index,rs);
+         return rs;
+        
+    }
+}
